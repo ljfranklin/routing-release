@@ -18,6 +18,10 @@ templates:
   registrar_settings.yml.erb: config/registrar_settings.yml
 
 properties:
+  bpm.enabled:
+    description: Enables Bosh Process Manager to routing components
+    default: false
+
   nats.machines:
     description: IPs of each NATS cluster member
     example: |
