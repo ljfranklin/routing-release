@@ -1,7 +1,7 @@
 ---
 processes:
-  route-registrar:
-    executable: /var/vcap/jobs/route_registrar/bin/route-registrar
+  route_registrar:
+    executable: /var/vcap/packages/route_registrar/bin/route-registrar
     args:
-      - -pidFile=/var/vcap/data/route_registrar.pid
+      - -pidfile=/var/vcap/data/route_registrar/route_registrar.pid
       - -configPath=/var/vcap/jobs/route_registrar/config/registrar_settings.yml

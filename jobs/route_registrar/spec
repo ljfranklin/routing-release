@@ -16,6 +16,7 @@ templates:
   pre-start: bin/pre-start
   route_registrar_ctl.erb: bin/route_registrar_ctl
   registrar_settings.yml.erb: config/registrar_settings.yml
+  bpm.yml.erb: config/bpm.yml
 
 properties:
   bpm.enabled:
