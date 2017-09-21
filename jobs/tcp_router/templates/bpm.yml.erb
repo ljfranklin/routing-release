@@ -1,0 +1,19 @@
+---
+processes:
+  tcp_router:
+    executable: /var/vcap/packages/tcp_router/bin/cf-tcp-router
+    args:
+      - -debugAddr=<%= p("tcp_router.debug_address") %>
+      - -logLevel=<%= p("tcp_router.log_level") %>
+      - -tcpLoadBalancerConfig=/var/vcap/jobs/tcp_router/config/haproxy.conf
+      - -tcpLoadBalancerBaseConfig=/var/vcap/jobs/tcp_router/config/haproxy.conf.template
+      - -config=/var/vcap/jobs/tcp_router/config/tcp_router.yml
+      - -tcpLoadBalancerStatsUnixSocket=/var/vcap/jobs/tcp_router/config/haproxy.sock
+      - -haproxyReloader=/var/vcap/jobs/tcp_router/bin/haproxy_reloader
+      - -statsCollectionInterval=<%= p("tcp_router.tcp_stats_collection_interval") %>
+      - -dropsondePort=<%=p("metron.port") %>
+    env:
+      - HAPROXY_PID_FILE=/var/vcap/data/tcp_router/haproxy.pid
+      - CONFIG=/var/vcap/jobs/tcp_router/config/haproxy.conf
+    hooks:
+      pre_start: /var/vcap/jobs/tcp_router/bin/bpm-pre-start

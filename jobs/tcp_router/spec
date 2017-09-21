@@ -9,6 +9,8 @@ templates:
   uaa_ca.crt.erb: config/certs/uaa/ca.crt
   haproxy.conf.erb: config/haproxy.conf
   haproxy.conf.template.erb: config/haproxy.conf.template
+  bpm.yml.erb: config/bpm.yml
+  bpm-pre-start.erb: bin/bpm-pre-start
 
 packages:
   - routing_utils
@@ -16,6 +18,9 @@ packages:
   - haproxy
 
 properties:
+  bpm.enabled:
+    description: Enables Bosh Process Manager to routing components
+    default: false
   tcp_router.debug_address:
     description: "Address at which to serve debug info"
     default: "127.0.0.1:17002"

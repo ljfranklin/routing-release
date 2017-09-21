@@ -1,0 +1,30 @@
+#!/bin/bash -e
+
+HAPROXY_PID_FILE=/var/vcap/data/tcp_router/haproxy.pid
+CONFIG=/var/vcap/jobs/tcp_router/config/haproxy.conf
+
+: ${HAPROXY_PID_FILE?"HAPROXY_PID_FILE is required"}
+: ${CONFIG?"CONFIG is required"}
+
+PATH=/var/vcap/packages/haproxy/bin:$PATH
+DAEMON=$(which haproxy)
+TIMESTAMP=$(which date)
+RETVAL=0
+echo "$("${TIMESTAMP}"): Starting HAProxy"
+set +e
+"${DAEMON}" -f "${CONFIG}" -D -p "${HAPROXY_PID_FILE}" 0<&-
+RETVAL=$?
+set -e
+case "${RETVAL}" in
+    0)
+        echo "$("${TIMESTAMP}"): Successfully started HAProxy"
+        ;;
+    *)
+        echo "$("${TIMESTAMP}"): Errored starting HAProxy"
+        echo "$("${TIMESTAMP}"): Errored starting HAProxy" >&2
+        echo "$("${TIMESTAMP}"): Removing stale PID file for HAProxy"
+        rm -f "${HAPROXY_PID_FILE}"
+        echo "FAILED - check logs"
+        exit 1
+        ;;
+esac
