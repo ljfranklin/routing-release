@@ -1,3 +1,11 @@
+<% if p("bpm.enabled") %>
+check process routing-api
+  with pidfile /var/vcap/sys/run/bpm/routing-api/routing-api.pid
+  start program "/var/vcap/jobs/bpm/bin/bpm start routing-api"
+    with timeout 60 seconds
+  stop program "/var/vcap/jobs/bpm/bin/bpm stop routing-api"
+  group vcap
+<% else %>
 check process routing-api
   with pidfile /var/vcap/sys/run/routing-api/routing-api.pid
   start program "/var/vcap/jobs/routing-api/bin/routing-api_ctl start"
@@ -5,3 +13,4 @@ check process routing-api
   stop program "/var/vcap/jobs/routing-api/bin/routing-api_ctl stop"
     as uid vcap and gid vcap
   group vcap
+<% end %>

@@ -12,12 +12,16 @@ templates:
   locket_ca.crt.erb: config/certs/locket/ca.crt
   locket_client.crt.erb: config/certs/locket/client.crt
   locket_client.key.erb: config/certs/locket/client.key
+  bpm.yml.erb: config/bpm.yml
 
 packages:
 - routing-api
 - routing_utils
 
 properties:
+  bpm.enabled:
+    description: Enables Bosh Process Manager to routing components
+    default: false
   routing_api.max_ttl:
     description: "String representing the maximum TTL a client can request for route registration."
     default: "120s"
